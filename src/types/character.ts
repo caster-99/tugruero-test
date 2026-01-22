@@ -1,3 +1,6 @@
+import type { Planet } from "./planet";
+import type { Transformation } from "./transformation";
+
 export interface Character {
   id: number;
   name: string;
@@ -7,4 +10,7 @@ export interface Character {
   gender: string;
   affiliation: string;
   image: string;
+  description: string;
+  originPlanet?: Planet;
+  transformations?: Transformation[];
 }

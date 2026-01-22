@@ -21,13 +21,140 @@
 
       &:hover {
         background-color: $primary;
-        color: $text-primary;
+        color: $primary;
       }
 
       &.active {
         background-color: $primary;
-        color: $text-primary;
+        color: $primary;
       }
+    }
+  }
+}
+
+.character-detail {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: $spacing-lg;
+
+  .back {
+    background: none;
+    border: none;
+    color: $secondary;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    margin-bottom: $spacing-md;
+  }
+
+  .character-header {
+    display: flex;
+    gap: $spacing-lg;
+    align-items: center;
+    background: $surface;
+    padding: $spacing-lg;
+    border-radius: $radius-lg;
+    margin-bottom: $spacing-md;
+
+    img {
+      width: 140px;
+      border-radius: $radius-md;
+    }
+
+    h1 {
+      margin-bottom: 4px;
+      color: $primary;
+    }
+
+    .race {
+      color: $text-secondary;
+    }
+  }
+
+  .tabs {
+    display: flex;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-md;
+
+    button {
+      background: none;
+      border: none;
+      padding: 8px 14px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+
+      &.active {
+        color: $primary;
+        border-color: $primary;
+      }
+    }
+  }
+
+  .tab-content {
+    background: $surface;
+    padding: $spacing-lg;
+    border-radius: $radius-lg;
+    .description {
+      color: $text-secondary;
+    }
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: $spacing-md;
+    margin-bottom: $spacing-md;
+
+    div {
+      background: rgba(255, 255, 255, 0.04);
+      padding: $spacing-sm;
+      border-radius: $radius-sm;
+      color: $text-secondary;
+      display: flex;
+      gap: 6px;
+      justify-content: space-between;
+      flex-direction: column;
+    }
+  }
+
+  .transformations {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: $spacing-md;
+    color: $text-secondary;
+
+    .transformation-card {
+      background: rgba(255, 255, 255, 0.04);
+      padding: $spacing-sm;
+      border-radius: $radius-sm;
+      text-align: center;
+
+      img {
+        width: 100%;
+        border-radius: $radius-sm;
+        object-fit: contain;
+      }
+    }
+  }
+
+  .planet {
+    img {
+      width: 100%;
+      max-width: 400px;
+      border-radius: $radius-md;
+      margin-bottom: $spacing-md;
+    }
+
+    .destroyed {
+      color: #ff5c5c;
+      font-weight: 600;
+    }
+    h3 {
+      color: $primary;
+    }
+    .description {
+      color: $text-secondary;
     }
   }
 }

@@ -5,6 +5,7 @@ import CharacterList from "./pages/Characters/CharacterList";
 import CharacterForm from "./pages/Characters/CharacterForm";
 import DashboardLayout from "./layouts/DashboardLayout";
 import PlanetList from "./pages/Planets/PlanetList";
+import CharacterDetail from "./pages/Characters/CharacterDetail";
 
 function App() {
   return (
@@ -17,6 +18,17 @@ function App() {
           <ProtectedRoute>
             <DashboardLayout>
               <CharacterList />
+            </DashboardLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/characters/:id"
+        element={
+          <ProtectedRoute>
+            <DashboardLayout>
+              <CharacterDetail />
             </DashboardLayout>
           </ProtectedRoute>
         }
