@@ -1,0 +1,127 @@
+@use "../../styles/variables" as *;
+
+.planet-list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  overflow-x: hidden;
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: $spacing-lg;
+
+    button {
+      background: transparent;
+      border: 1px solid $primary;
+      color: $primary;
+      padding: 6px 12px;
+      border-radius: $radius-sm;
+      margin: 0 $spacing-sm;
+
+      &:hover {
+        background-color: $primary;
+        color: $surface;
+      }
+
+      &.active {
+        background-color: $primary;
+        color: $surface;
+      }
+    }
+  }
+}
+
+.planet-detail {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: $spacing-lg;
+
+  .back {
+    background: none;
+    border: none;
+    color: $secondary;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    margin-bottom: $spacing-md;
+  }
+
+  .planet-header {
+    display: flex;
+    gap: $spacing-lg;
+    align-items: center;
+    background: $surface;
+    padding: $spacing-lg;
+    border-radius: $radius-lg;
+    margin-bottom: $spacing-md;
+
+    img {
+      width: 140px;
+      border-radius: $radius-md;
+    }
+
+    h1 {
+      margin-bottom: 4px;
+      color: $primary;
+    }
+
+    .race {
+      color: $text-secondary;
+    }
+  }
+
+  .characters-section {
+    margin-top: $spacing-lg;
+
+    h2 {
+      margin-bottom: $spacing-md;
+      color: $primary;
+    }
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: $spacing-md;
+
+    .character-card {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: $spacing-md;
+      background-color: $surface;
+      padding: $spacing-md;
+      border-radius: $radius-md;
+      img {
+        width: 100px;
+        border-radius: $radius-sm;
+      }
+
+      .char-info {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+    }
+  }
+
+  .planet {
+    img {
+      width: 100%;
+      max-width: 400px;
+      border-radius: $radius-md;
+      margin-bottom: $spacing-md;
+    }
+
+    .destroyed {
+      color: #ff5c5c;
+      font-weight: 600;
+    }
+    h3 {
+      color: $primary;
+    }
+    .description {
+      color: $text-secondary;
+    }
+  }
+}

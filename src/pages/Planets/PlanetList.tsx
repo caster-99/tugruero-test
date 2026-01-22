@@ -3,6 +3,8 @@ import "./Planets.scss";
 import Spinner from "../../components/Spinner/Spinner";
 import type { SortKey, SortOrder } from "../../types/table";
 import { usePlanets } from "../../hooks/usePlanets";
+import { PlanetsTable } from "../../components/Planets/PlanetsTable";
+import type { Planet } from "../../types/planet";
 
 const PAGE_SIZE = 5;
 
@@ -28,16 +30,16 @@ const PlanetList = () => {
     setCurrentPage(page);
   };
 
-  const filtered = useMemo(() => {
+  const filteredPlanets = useMemo(() => {
     return planets.filter((p) =>
       p.name.toLowerCase().includes(search.toLowerCase()),
     );
   }, [planets, search]);
 
-  const sorted = useMemo(() => {
-    if (!sortKey) return filtered;
+  const sortedPlanets = useMemo(() => {
+    if (!sortKey) return filteredPlanets;
 
-    return [...filtered].sort((a, b) => {
+    return [...filteredPlanets].sort((a, b) => {
       const aVal = a[sortKey as keyof typeof a];
       const bVal = b[sortKey as keyof typeof b];
 
@@ -49,9 +51,9 @@ const PlanetList = () => {
       if (aVal > bVal) return sortOrder === "asc" ? 1 : -1;
       return 0;
     });
-  }, [filtered, sortKey, sortOrder]);
+  }, [filteredPlanets, sortKey, sortOrder]);
 
-  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+  const totalPages = Math.ceil(filteredPlanets.length / PAGE_SIZE);
 
   if (loading) return <Spinner />;
   if (error) return <p>{error}</p>;
@@ -60,17 +62,17 @@ const PlanetList = () => {
     <div className="planet-list">
       <h1>Planetas</h1>
 
-      {sorted.length === 0 && <p>No se encontraron planetas.</p>}
-      {/* <CharactersTable
-        data={sorted}
+      {sortedPlanets.length === 0 && <p>No se encontraron planetas.</p>}
+      <PlanetsTable
+        data={sortedPlanets}
+        onSort={handleSort}
         page={currentPage}
         pageSize={PAGE_SIZE}
-        onDelete={handleDelete}
-        onSort={handleSort}
         sortOrder={sortOrder}
         search={search}
         onSetSearch={setSearch}
-      /> */}
+        onDelete={() => {}}
+      />
 
       <div className="pagination">
         {Array.from({ length: totalPages }, (_, i) => {
