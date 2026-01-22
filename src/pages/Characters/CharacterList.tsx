@@ -8,7 +8,7 @@ import type { SortKey, SortOrder } from "../../types/table";
 const PAGE_SIZE = 5;
 
 const CharacterList = () => {
-  const { characters, loading, error } = useCharacters();
+  const { characters, loading, error, deleteCharacter } = useCharacters();
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [sortKey, setSortKey] = useState<SortKey | null>(null);
@@ -55,7 +55,9 @@ const CharacterList = () => {
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
 
   const handleDelete = (id: number) => {
-    alert(`Simulando delete del personaje ${id}`);
+    if (confirm("Desea eliminar este personaje?")) {
+      deleteCharacter(id);
+    }
   };
 
   if (loading) return <Spinner />;

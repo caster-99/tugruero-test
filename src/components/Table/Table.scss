@@ -60,19 +60,6 @@
     height: 80px;
     object-fit: contain;
   }
-
-  .actions {
-    display: flex;
-    gap: 6px;
-    color: $text-primary;
-    font-size: 18px;
-    .action {
-      cursor: pointer;
-      &:hover {
-        color: $primary;
-      }
-    }
-  }
 }
 
 .filters {

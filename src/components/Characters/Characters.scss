@@ -14,3 +14,16 @@
     color: $text-primary;
   }
 }
+
+.actions {
+  display: flex;
+  gap: 6px;
+  color: $text-primary;
+  font-size: 18px;
+  .action {
+    cursor: pointer;
+    &:hover {
+      color: $primary;
+    }
+  }
+}

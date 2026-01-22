@@ -43,14 +43,21 @@ export const CharactersTable = ({
       label: "Acciones",
       render: (char) => (
         <div className="actions">
-          <IoEyeOutline onClick={() => navigate(`/characters/${char.id}`)} />
+          <IoEyeOutline
+            className="action"
+            onClick={() => navigate(`/characters/${char.id}`)}
+          />
 
           {user?.role === "admin" && (
             <>
               <MdOutlineEdit
+                className="action"
                 onClick={() => navigate(`/characters/edit/${char.id}`)}
               />
-              <MdOutlineDeleteOutline onClick={() => onDelete(char.id)} />
+              <MdOutlineDeleteOutline
+                className="action"
+                onClick={() => onDelete(char.id)}
+              />
             </>
           )}
         </div>
