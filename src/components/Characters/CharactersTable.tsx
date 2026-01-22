@@ -6,6 +6,8 @@ import { Suspense, useEffect, useState } from "react";
 import Spinner from "../Spinner/Spinner";
 import type { SortKey } from "../../utils/parsing";
 import TableHeader from "./TableHeader";
+import { IoEyeOutline } from "react-icons/io5";
+import { MdOutlineDeleteOutline, MdOutlineEdit } from "react-icons/md";
 
 interface Props {
   data: Character[];
@@ -50,18 +52,24 @@ export const CharactersTable = ({
           {pageData.map((char) => (
             <tr key={char.id}>
               <td className="actions">
-                <button onClick={() => navigate(`/characters/${char.id}`)}>
-                  Ver
-                </button>
+                <IoEyeOutline
+                  className="action"
+                  title="Ver"
+                  onClick={() => navigate(`/characters/${char.id}`)}
+                />
 
                 {user?.role === "admin" && (
                   <>
-                    <button
+                    <MdOutlineEdit
+                      className="action"
                       onClick={() => navigate(`/characters/edit/${char.id}`)}
-                    >
-                      Editar
-                    </button>
-                    <button onClick={() => onDelete(char.id)}>Eliminar</button>
+                      title="Editar"
+                    />
+                    <MdOutlineDeleteOutline
+                      className="action"
+                      onClick={() => onDelete(char.id)}
+                      title="Eliminar"
+                    />
                   </>
                 )}
               </td>
