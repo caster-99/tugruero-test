@@ -3,7 +3,8 @@ import { ProtectedRoute } from "./auth/ProtectedRoute";
 import Login from "./pages/Login/Login";
 import CharacterList from "./pages/Characters/CharacterList";
 import CharacterForm from "./pages/Characters/CharacterForm";
-import { DashboardLayout } from "./layouts/DashboardLayout";
+import DashboardLayout from "./layouts/DashboardLayout";
+import PlanetList from "./pages/Planets/PlanetList";
 
 function App() {
   return (
@@ -16,6 +17,17 @@ function App() {
           <ProtectedRoute>
             <DashboardLayout>
               <CharacterList />
+            </DashboardLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/planets"
+        element={
+          <ProtectedRoute>
+            <DashboardLayout>
+              <PlanetList />
             </DashboardLayout>
           </ProtectedRoute>
         }

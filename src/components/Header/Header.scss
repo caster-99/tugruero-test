@@ -6,9 +6,31 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 $spacing-lg;
+  padding: $spacing-lg;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 
+  .header__left {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+  }
+
+  .header__right {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+  }
+  .menu-btn {
+    font-size: 22px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+
+    @media (min-width: $desktop) {
+      display: none;
+    }
+  }
   .logo {
     font-weight: 700;
     color: $primary;

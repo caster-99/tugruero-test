@@ -1,0 +1,33 @@
+@use "../../styles/variables" as *;
+
+.character-list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  overflow-x: hidden;
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: $spacing-lg;
+
+    button {
+      background: transparent;
+      border: 1px solid $primary;
+      color: $primary;
+      padding: 6px 12px;
+      border-radius: $radius-sm;
+      margin: 0 $spacing-sm;
+
+      &:hover {
+        background-color: $primary;
+        color: $text-primary;
+      }
+
+      &.active {
+        background-color: $primary;
+        color: $text-primary;
+      }
+    }
+  }
+}

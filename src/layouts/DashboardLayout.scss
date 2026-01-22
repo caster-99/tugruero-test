@@ -1,18 +1,18 @@
 @use "../styles/variables" as *;
 
 .dashboard {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
 
-  &__content {
-    display: flex;
-    flex: 1;
-  }
+.dashboard__body {
+  flex: 1;
+  display: flex;
+}
 
-  .main {
-    flex: 1;
-    padding: $spacing-lg;
-    overflow-y: auto;
-  }
+.dashboard__content {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
 }
