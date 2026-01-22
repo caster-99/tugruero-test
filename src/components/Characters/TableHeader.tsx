@@ -1,5 +1,5 @@
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import type { SortKey } from "../../utils/parsing";
+import type { SortKey } from "../../types/table";
 
 interface TableHeaderProps {
   label: string;

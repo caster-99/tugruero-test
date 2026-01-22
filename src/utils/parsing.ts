@@ -1,12 +1,3 @@
-export type SortKey =
-  | "ki"
-  | "race"
-  | "affiliation"
-  | "name"
-  | "maxKi"
-  | "gender";
-export type SortOrder = "asc" | "desc";
-
 export const parseKi = (value: string): number => {
   if (!value) return 0;
 

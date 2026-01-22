@@ -1,4 +1,5 @@
 import type { Planet } from "./planet";
+import type { Column } from "./table";
 import type { Transformation } from "./transformation";
 
 export interface Character {
