@@ -2,6 +2,7 @@ export interface Column<T> {
   key: string;
   label: string;
   sortable?: boolean;
+  sortKey?: SortKey;
   render: (row: T) => React.ReactNode;
 }
 

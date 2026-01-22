@@ -37,11 +37,11 @@ const TableHeader = ({
   return (
     <th onClick={() => onSort(columnKey)}>
       {label}
-      {/* <SortArrow
+      <SortArrow
         activeSortKey={activeSortKey}
         sortOrder={sortOrder}
         columnKey={columnKey}
-      /> */}
+      />
     </th>
   );
 };

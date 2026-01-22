@@ -17,7 +17,10 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       <Header onMenuClick={() => setSidebarOpen(true)} />
 
       <div className="dashboard__body">
-        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+        <Sidebar
+          isOpen={sidebarOpen}
+          onClose={() => setSidebarOpen(!sidebarOpen)}
+        />
 
         <main className="dashboard__content">{children}</main>
       </div>

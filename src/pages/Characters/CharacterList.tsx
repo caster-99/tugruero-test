@@ -5,8 +5,8 @@ import { CharactersTable } from "../../components/Characters/CharactersTable";
 import "./Character.scss";
 import Spinner from "../../components/Spinner/Spinner";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { parseKi, type SortKey, type SortOrder } from "../../utils/parsing";
 import { exportToCSV } from "../../utils/exportToCSV";
+import type { SortKey, SortOrder } from "../../types/table";
 
 const PAGE_SIZE = 5;
 
@@ -36,8 +36,12 @@ const CharacterList = () => {
     if (!sortKey) return filtered;
 
     return [...filtered].sort((a, b) => {
-      const aVal = a[sortKey];
-      const bVal = b[sortKey];
+      const aVal = a[sortKey as keyof typeof a];
+      const bVal = b[sortKey as keyof typeof b];
+
+      if (aVal === undefined && bVal === undefined) return 0;
+      if (aVal === undefined) return sortOrder === "asc" ? 1 : -1;
+      if (bVal === undefined) return sortOrder === "asc" ? -1 : 1;
 
       if (aVal < bVal) return sortOrder === "asc" ? -1 : 1;
       if (aVal > bVal) return sortOrder === "asc" ? 1 : -1;
