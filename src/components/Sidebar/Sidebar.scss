@@ -1,0 +1,29 @@
+@use "../../styles/variables" as *;
+
+.sidebar {
+  width: 220px;
+  background-color: $surface;
+  padding: $spacing-lg;
+  height: calc(100vh - 60px);
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+
+    a {
+      color: $text-secondary;
+      padding: 8px 12px;
+      border-radius: $radius-sm;
+
+      &.active {
+        background-color: $primary;
+        color: $text-primary;
+      }
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+    }
+  }
+}

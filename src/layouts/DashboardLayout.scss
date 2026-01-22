@@ -1,0 +1,18 @@
+@use "../styles/variables" as *;
+
+.dashboard {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  &__content {
+    display: flex;
+    flex: 1;
+  }
+
+  .main {
+    flex: 1;
+    padding: $spacing-lg;
+    overflow-y: auto;
+  }
+}
