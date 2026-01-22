@@ -1,0 +1,71 @@
+@use "../../styles/variables" as *;
+
+.login-form {
+  max-width: 360px;
+  margin: 80px auto;
+  padding: 24px;
+  border-radius: 8px;
+  background: $background;
+  color: $text-primary;
+
+  h2 {
+    margin-bottom: $spacing-lg;
+    text-align: center;
+  }
+
+  .error {
+    color: $error;
+    margin-bottom: $spacing-md;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: $spacing-md;
+
+    input {
+      padding: 10px;
+      border-radius: $radius-sm;
+      border: 1px solid $primary;
+      background: $background;
+      color: $text-primary;
+
+      &:focus {
+        outline: none;
+        border-color: $primary;
+      }
+    }
+
+    span {
+      margin-top: $spacing-xs;
+      font-size: 12px;
+      color: $error;
+    }
+  }
+
+  .info {
+    margin: $spacing-sm 0 $spacing-xs 0;
+  }
+
+  button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: $radius-sm;
+    background: $primary;
+    color: $text-secondary;
+    cursor: pointer;
+    font-weight: 500;
+
+    &:hover {
+      opacity: 0.9;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
