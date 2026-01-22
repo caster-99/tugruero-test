@@ -42,24 +42,6 @@ export const useCharacters = () => {
     }
   };
 
-  const createCharacter = (newCharacter: Omit<Character, "id">) => {
-    // Generate a fake numeric ID
-    const fakeId = Math.floor(Math.random() * 1000000);
-
-    const character: Character = {
-      ...newCharacter,
-      id: fakeId,
-    };
-
-    setCharacters((prev) => [character, ...prev]);
-  };
-
-  const updateCharacter = (id: number, updates: Partial<Character>) => {
-    setCharacters((prev) =>
-      prev.map((char) => (char.id === id ? { ...char, ...updates } : char)),
-    );
-  };
-
   const deleteCharacter = (id: number) => {
     setCharacters((prev) => prev.filter((char) => char.id !== id));
   };
@@ -73,8 +55,6 @@ export const useCharacters = () => {
     loading,
     error,
     refetch: fetchCharacters,
-    createCharacter,
-    updateCharacter,
     deleteCharacter,
   };
 };

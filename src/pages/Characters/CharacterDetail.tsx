@@ -3,8 +3,7 @@ import { useCharacter } from "../../hooks/useCharacter";
 import Spinner from "../../components/Spinner/Spinner";
 import "./Character.scss";
 import { IoIosArrowBack } from "react-icons/io";
-import { useEffect, useState } from "react";
-import { useTransformations } from "../../hooks/useTransformation";
+import { useState } from "react";
 
 type TabKey = "info" | "transformations" | "planet";
 
@@ -13,11 +12,6 @@ const CharacterDetail = () => {
   const navigate = useNavigate();
   const { character, loading, error } = useCharacter(id);
   const [activeTab, setActiveTab] = useState<TabKey>("info");
-  // const {
-  //   transformations,
-  //   loading: loadingTransformations,
-  //   error: transformationsError,
-  // } = useTransformations(id, activeTab === "transformations");
 
   if (loading) return <Spinner />;
   if (error) return <p>{error}</p>;

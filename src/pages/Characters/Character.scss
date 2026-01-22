@@ -147,7 +147,7 @@
     }
 
     .destroyed {
-      color: #ff5c5c;
+      color: $error;
       font-weight: 600;
     }
     h3 {
@@ -156,5 +156,31 @@
     .description {
       color: $text-secondary;
     }
+  }
+}
+
+.character-form {
+  max-width: 500px;
+  margin: auto;
+
+  input,
+  textarea,
+  select {
+    width: 100%;
+    margin-bottom: 6px;
+    padding: 8px;
+    border: 1px solid $surface-secondary;
+    border-radius: $radius-sm;
+  }
+
+  p {
+    color: $error;
+    font-size: 12px;
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+
+  button {
+    width: 100%;
   }
 }
