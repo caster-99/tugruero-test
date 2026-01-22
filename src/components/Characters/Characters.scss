@@ -13,16 +13,25 @@
   td {
     padding: 10px;
     text-align: left;
+    width: 150px;
+  }
+
+  th {
+    cursor: pointer;
+    user-select: none;
+    color: $text-secondary;
+    font-size: 14px;
+    background-color: $surface;
+
+    .sort-arrow {
+      margin-left: 6px;
+      display: inline-flex;
+      vertical-align: middle;
+    }
   }
 
   tr:nth-child(even) {
     background-color: $surface-secondary;
-  }
-
-  th {
-    color: $text-secondary;
-    font-size: 14px;
-    background-color: $surface;
   }
 
   th:first-child {
@@ -42,6 +51,7 @@
   .actions {
     display: flex;
     gap: 6px;
+    flex-direction: column;
 
     button {
       background: transparent;
