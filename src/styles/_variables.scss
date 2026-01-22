@@ -1,12 +1,15 @@
-$primary: #2cbc00;
+$primary: #ff6b3d;
 $secondary: #1e1e2f;
-$background: #ffffff;
-$surface: #182350;
-$surface-secondary: #e6e6e6;
+$background: #f6f7f9;
+$surface: #ffffff;
+$surface-secondary: #efefef;
 $text-primary: #000000;
-$text-secondary: #ffffff;
-$error: #e63946;
-$success: #2ecc71;
+$text-secondary: #000000b3;
+
+$success: #22c55e;
+$warning: #f59e0b;
+$error: #ef4444;
+
 $font-main: "Inter", system-ui, sans-serif;
 $spacing-xs: 4px;
 $spacing-sm: 8px;
@@ -24,3 +27,12 @@ $desktop: 1024px;
 
 $spinner-size: 50px;
 $border-width: 8px;
+
+$tag-green-bg: #ecfdf5;
+$tag-green-text: #047857;
+
+$tag-purple-bg: #f5f3ff;
+$tag-purple-text: #6d28d9;
+
+$tag-blue-bg: #eff6ff;
+$tag-blue-text: #1d4ed8;

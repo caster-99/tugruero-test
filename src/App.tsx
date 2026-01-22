@@ -6,6 +6,7 @@ import CharacterForm from "./pages/Characters/CharacterForm";
 import DashboardLayout from "./layouts/DashboardLayout";
 import PlanetList from "./pages/Planets/PlanetList";
 import CharacterDetail from "./pages/Characters/CharacterDetail";
+import PlanetDetail from "./pages/Planets/PlanetDetail";
 
 function App() {
   return (
@@ -29,6 +30,17 @@ function App() {
           <ProtectedRoute>
             <DashboardLayout>
               <CharacterDetail />
+            </DashboardLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/planets/:id"
+        element={
+          <ProtectedRoute>
+            <DashboardLayout>
+              <PlanetDetail />
             </DashboardLayout>
           </ProtectedRoute>
         }

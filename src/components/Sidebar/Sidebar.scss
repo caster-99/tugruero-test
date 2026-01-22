@@ -25,7 +25,7 @@
   .close {
     background: none;
     border: none;
-    color: white;
+    color: $text-primary;
     font-size: 20px;
     margin-bottom: $spacing-lg;
 
@@ -40,7 +40,7 @@
     gap: $spacing-md;
 
     a {
-      color: $text-secondary;
+      color: $text-primary;
       padding: 8px 12px;
       border-radius: $radius-sm;
 

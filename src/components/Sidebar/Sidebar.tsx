@@ -5,6 +5,7 @@ import { IoMdClose } from "react-icons/io";
 
 export const Sidebar = ({
   isOpen,
+  onClose,
 }: {
   isOpen: boolean;
   onClose: () => void;
@@ -14,7 +15,7 @@ export const Sidebar = ({
   return (
     <>
       <aside className={`sidebar ${isOpen ? "open" : ""}`}>
-        <button className="close">
+        <button className="close" onClick={() => onClose()}>
           <IoMdClose />
         </button>
 

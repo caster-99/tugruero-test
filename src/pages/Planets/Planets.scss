@@ -1,6 +1,6 @@
 @use "../../styles/variables" as *;
 
-.character-list {
+.planet-list {
   display: flex;
   flex-direction: column;
   gap: $spacing-md;
@@ -32,7 +32,7 @@
   }
 }
 
-.character-detail {
+.planet-detail {
   max-width: 1100px;
   margin: 0 auto;
   padding: $spacing-lg;
@@ -48,7 +48,7 @@
     margin-bottom: $spacing-md;
   }
 
-  .character-header {
+  .planet-header {
     display: flex;
     gap: $spacing-lg;
     align-items: center;
@@ -72,68 +72,35 @@
     }
   }
 
-  .tabs {
-    display: flex;
-    gap: $spacing-sm;
-    margin-bottom: $spacing-md;
+  .characters-section {
+    margin-top: $spacing-lg;
 
-    button {
-      background: none;
-      border: none;
-      padding: 8px 14px;
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-
-      &.active {
-        color: $primary;
-        border-color: $primary;
-      }
+    h2 {
+      margin-bottom: $spacing-md;
+      color: $primary;
     }
-  }
 
-  .tab-content {
-    background: $surface;
-    padding: $spacing-lg;
-    border-radius: $radius-lg;
-    .description {
-      color: $text-secondary;
-    }
-  }
-
-  .stats {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: $spacing-md;
-    margin-bottom: $spacing-md;
 
-    div {
-      background: rgba(255, 255, 255, 0.04);
-      padding: $spacing-sm;
-      border-radius: $radius-sm;
-      color: $text-secondary;
+    .character-card {
       display: flex;
-      gap: 6px;
-      justify-content: space-between;
-      flex-direction: column;
-    }
-  }
-
-  .transformations {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: $spacing-md;
-    color: $text-secondary;
-
-    .transformation-card {
-      background: rgba(255, 255, 255, 0.04);
-      padding: $spacing-sm;
-      border-radius: $radius-sm;
-      text-align: center;
-
+      flex-direction: row;
+      align-items: flex-start;
+      gap: $spacing-md;
+      background-color: $surface;
+      padding: $spacing-md;
+      border-radius: $radius-md;
       img {
-        width: 100%;
+        width: 100px;
         border-radius: $radius-sm;
-        object-fit: contain;
+      }
+
+      .char-info {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
       }
     }
   }
