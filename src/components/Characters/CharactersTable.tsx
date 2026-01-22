@@ -16,6 +16,8 @@ interface Props {
   sortOrder: "asc" | "desc";
   onDelete: (id: number) => void;
   onSort: (key: SortKey) => void;
+  search: string;
+  onSetSearch?: (search: string) => void;
 }
 
 export const CharactersTable = ({
@@ -24,6 +26,8 @@ export const CharactersTable = ({
   pageSize,
   onDelete,
   onSort,
+  search,
+  onSetSearch,
 }: Props) => {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -112,10 +116,13 @@ export const CharactersTable = ({
     <div className="characters-table-wrapper">
       <DataTable
         data={pageData}
+        allData={data}
         columns={columns}
         onSort={onSort}
         rowKey={(char) => char.id}
         sortOrder={sortOrder}
+        search={search}
+        onSetSearch={onSetSearch}
       />
     </div>
   );

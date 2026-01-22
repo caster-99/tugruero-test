@@ -1,11 +1,8 @@
 import { useMemo, useState } from "react";
 import { useCharacters } from "../../hooks/useCharacters";
-import { CharactersFilters } from "../../components/Characters/CharactersFilter";
 import { CharactersTable } from "../../components/Characters/CharactersTable";
 import "./Character.scss";
 import Spinner from "../../components/Spinner/Spinner";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { exportToCSV } from "../../utils/exportToCSV";
 import type { SortKey, SortOrder } from "../../types/table";
 
 const PAGE_SIZE = 5;
@@ -16,6 +13,7 @@ const CharacterList = () => {
   const [page, setPage] = useState(1);
   const [sortKey, setSortKey] = useState<SortKey | null>(null);
   const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const handleSort = (key: SortKey) => {
     if (key === sortKey) {
@@ -24,6 +22,11 @@ const CharacterList = () => {
       setSortKey(key);
       setSortOrder("asc");
     }
+  };
+
+  const handlePageChange = (page: number) => {
+    setPage(page + 1);
+    setCurrentPage(page);
   };
 
   const filtered = useMemo(() => {
@@ -61,37 +64,31 @@ const CharacterList = () => {
   return (
     <div className="character-list">
       <h1>Personajes</h1>
-      <button
-        onClick={() => exportToCSV(sorted)}
-        title="Exportar todos los personajes en formato CSV"
-      >
-        Exportar CSV
-      </button>
-
-      <CharactersFilters search={search} onSearchChange={setSearch} />
 
       <CharactersTable
         data={sorted}
-        page={page}
+        page={currentPage}
         pageSize={PAGE_SIZE}
         onDelete={handleDelete}
         onSort={handleSort}
         sortOrder={sortOrder}
+        search={search}
+        onSetSearch={setSearch}
       />
 
       <div className="pagination">
-        <button disabled={page === 1} onClick={() => setPage(page - 1)}>
-          <IoIosArrowBack />
-        </button>
-        <span>
-          {page} / {totalPages}
-        </span>
-        <button
-          disabled={page === totalPages}
-          onClick={() => setPage(page + 1)}
-        >
-          <IoIosArrowForward />
-        </button>
+        {Array.from({ length: totalPages }, (_, i) => {
+          const page = i + 1;
+          return (
+            <button
+              key={page}
+              className={page === currentPage ? "active" : ""}
+              onClick={() => handlePageChange(page)}
+            >
+              {page}
+            </button>
+          );
+        })}
       </div>
     </div>
   );
