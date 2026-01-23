@@ -7,10 +7,17 @@ import DashboardLayout from "./layouts/DashboardLayout";
 import PlanetList from "./pages/Planets/PlanetList";
 import CharacterDetail from "./pages/Characters/CharacterDetail";
 import PlanetDetail from "./pages/Planets/PlanetDetail";
+import NotFound from "./pages/Status/NotFound";
+import Unauthorized from "./pages/Status/Unauthorized";
+
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
-    <Routes>
+    <>
+      <Toaster position="top-right" />
+      <Routes>
+
       <Route path="/login" element={<Login />} />
 
       <Route
@@ -36,11 +43,22 @@ function App() {
       />
 
       <Route
-        path="/planets/:id"
+        path="/characters/new"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={["admin"]}>
             <DashboardLayout>
-              <PlanetDetail />
+              <CharacterForm />
+            </DashboardLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/characters/edit/:id"
+        element={
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <DashboardLayout>
+              <CharacterForm />
             </DashboardLayout>
           </ProtectedRoute>
         }
@@ -58,17 +76,38 @@ function App() {
       />
 
       <Route
-        path="/characters/new"
+        path="/planets/:id"
         element={
-          <ProtectedRoute allowedRoles={["admin"]}>
+          <ProtectedRoute>
             <DashboardLayout>
-              <CharacterForm />
+              <PlanetDetail />
             </DashboardLayout>
           </ProtectedRoute>
         }
       />
+
+      <Route
+        path="/unauthorized"
+        element={
+          <DashboardLayout>
+            <Unauthorized />
+          </DashboardLayout>
+        }
+      />
+
+      <Route
+        path="*"
+        element={
+          <DashboardLayout>
+            <NotFound />
+          </DashboardLayout>
+        }
+      />
     </Routes>
+    </>
   );
 }
 
+
 export default App;
+

@@ -28,8 +28,8 @@ const Login = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (data: LoginForm) => {
-    const success = await login(data.email, data.password);
+  const onSubmit = (data: LoginForm) => {
+    const success = login(data.email, data.password);
 
     if (!success) {
       setError("root", { message: "Credenciales inválidas" });

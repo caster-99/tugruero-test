@@ -1,14 +1,13 @@
-import { useMemo } from "react";
 import type { Column, SortKey } from "../../types/table";
-import { exportToCSV } from "../../utils/exportToCSV";
-import { Button } from "../Button/Button";
 import { CharactersFilters } from "../Characters/CharactersFilter";
+import { ExportCSVButton } from "./ExportCSVButton";
 import "./Table.scss";
 import { HiArrowsUpDown } from "react-icons/hi2";
 
+
 interface DataTableProps<T> {
-  data: T[];
-  allData?: T[];
+  data: T[]; // Filtered data
+  pageData: T[]; // Paged data
   columns: Column<T>[];
   onSort?: (key: SortKey) => void;
   rowKey: (row: T) => string | number;
@@ -16,14 +15,24 @@ interface DataTableProps<T> {
   sortOrder?: "asc" | "desc";
   search: string;
   onSetSearch?: (search: string) => void;
+  fetchAllUnfiltered: () => Promise<T[]>;
+  // Character specific filters
+  gender?: string;
+
+  onGenderChange?: (value: string) => void;
+  race?: string;
+  onRaceChange?: (value: string) => void;
+  affiliation?: string;
+  onAffiliationChange?: (value: string) => void;
+  isDestroyed?: string;
+  onIsDestroyedChange?: (value: string) => void;
 }
+
 const SortArrow = ({
   activeSortKey,
-  sortOrder,
   columnKey,
 }: {
   activeSortKey: SortKey | null;
-  sortOrder: "asc" | "desc";
   columnKey: SortKey;
 }) => {
   if (activeSortKey !== columnKey) return null;
@@ -37,45 +46,47 @@ const SortArrow = ({
 
 export function DataTable<T>({
   data,
+  pageData,
   columns,
   onSort,
   rowKey,
-  allData,
-  sortOrder,
+  fetchAllUnfiltered, 
   search,
   onSetSearch,
+  gender,
+  onGenderChange,
+  race,
+  onRaceChange,
+  affiliation,
+  onAffiliationChange,
+  isDestroyed,
+  onIsDestroyedChange,
 }: DataTableProps<T>) {
-  const filtered = useMemo(() => {
-    return data.filter((row) =>
-      columns.some((col) => {
-        const value = col.render(row);
-        return (
-          typeof value === "string" &&
-          value.toLowerCase().includes(search.toLowerCase())
-        );
-      }),
-    );
-  }, [data, search, columns]);
-
   return (
     <div>
       <div className="table-toolbar">
-        <CharactersFilters
-          search={search}
-          onSearchChange={onSetSearch || (() => {})}
+        {onSetSearch && (
+          <CharactersFilters
+            search={search}
+            onSearchChange={onSetSearch}
+            gender={gender || ""}
+            onGenderChange={onGenderChange}
+            race={race || ""}
+            onRaceChange={onRaceChange}
+            affiliation={affiliation || ""}
+            onAffiliationChange={onAffiliationChange}
+            isDestroyed={isDestroyed || ""}
+            onIsDestroyedChange={onIsDestroyedChange}
+          />
+        )}
+
+        <ExportCSVButton
+          data={data}
+          fetchAllUnfiltered={fetchAllUnfiltered}
+          columns={columns.map(col => ({ key: col.key, label: col.label }))}
         />
-        <Button
-          onClick={() =>
-            exportToCSV(
-              allData ? (allData as any[]) : (data as any[]),
-              columns.map((col) => col.key),
-            )
-          }
-          title="Exportar toda la informacion en formato CSV"
-        >
-          Exportar CSV
-        </Button>
       </div>
+
       <div className="table-wrapper">
         <table className="table">
           <thead>
@@ -91,8 +102,7 @@ export function DataTable<T>({
                   {col.label}
                   {col.sortable && (
                     <SortArrow
-                      activeSortKey={col.sortKey as SortKey}
-                      sortOrder={sortOrder as "asc" | "desc"}
+                      activeSortKey={col.sortKey as SortKey} 
                       columnKey={col.sortKey as SortKey}
                     />
                   )}
@@ -102,12 +112,12 @@ export function DataTable<T>({
           </thead>
 
           <tbody>
-            {filtered.map((row) => (
+            {pageData.map((row) => (
               <tr key={rowKey(row)}>
                 {columns.map((col) => (
                   <td key={col.key}>{col.render(row)}</td>
                 ))}
-              </tr>
+            </tr>
             ))}
           </tbody>
         </table>
@@ -115,3 +125,4 @@ export function DataTable<T>({
     </div>
   );
 }
+

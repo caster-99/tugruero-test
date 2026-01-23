@@ -8,9 +8,21 @@ import type { SortKey, SortOrder } from "../../types/table";
 const PAGE_SIZE = 5;
 
 const CharacterList = () => {
-  const { characters, loading, error, deleteCharacter } = useCharacters();
   const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
+  const [genderFilter, setGenderFilter] = useState("");
+  const [raceFilter, setRaceFilter] = useState("");
+  const [affiliationFilter, setAffiliationFilter] = useState("");
+
+  const filters = useMemo(() => ({
+    name: search,
+    gender: genderFilter,
+    race: raceFilter,
+    affiliation: affiliationFilter
+  }), [search, genderFilter, raceFilter, affiliationFilter]);
+
+  const { characters, loading, error, deleteCharacter, fetchAllUnfiltered } = useCharacters(filters);
+
+  
   const [sortKey, setSortKey] = useState<SortKey | null>(null);
   const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
   const [currentPage, setCurrentPage] = useState(1);
@@ -25,20 +37,13 @@ const CharacterList = () => {
   };
 
   const handlePageChange = (page: number) => {
-    setPage(page + 1);
     setCurrentPage(page);
   };
 
-  const filtered = useMemo(() => {
-    return characters.filter((c) =>
-      c.name.toLowerCase().includes(search.toLowerCase()),
-    );
-  }, [characters, search]);
-
   const sorted = useMemo(() => {
-    if (!sortKey) return filtered;
+    if (!sortKey) return characters;
 
-    return [...filtered].sort((a, b) => {
+    return [...characters].sort((a, b) => {
       const aVal = a[sortKey as keyof typeof a];
       const bVal = b[sortKey as keyof typeof b];
 
@@ -46,13 +51,19 @@ const CharacterList = () => {
       if (aVal === undefined) return sortOrder === "asc" ? 1 : -1;
       if (bVal === undefined) return sortOrder === "asc" ? -1 : 1;
 
+      if (typeof aVal === "string" && typeof bVal === "string") {
+        return sortOrder === "asc" 
+          ? aVal.localeCompare(bVal)
+          : bVal.localeCompare(aVal);
+      }
+
       if (aVal < bVal) return sortOrder === "asc" ? -1 : 1;
       if (aVal > bVal) return sortOrder === "asc" ? 1 : -1;
       return 0;
     });
-  }, [filtered, sortKey, sortOrder]);
+  }, [characters, sortKey, sortOrder]);
 
-  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+  const totalPages = Math.ceil(characters.length / PAGE_SIZE);
 
   const handleDelete = (id: number) => {
     if (confirm("Desea eliminar este personaje?")) {
@@ -69,6 +80,7 @@ const CharacterList = () => {
 
       <CharactersTable
         data={sorted}
+        fetchAllUnfiltered={fetchAllUnfiltered}
         page={currentPage}
         pageSize={PAGE_SIZE}
         onDelete={handleDelete}
@@ -76,7 +88,14 @@ const CharacterList = () => {
         sortOrder={sortOrder}
         search={search}
         onSetSearch={setSearch}
+        gender={genderFilter}
+        onGenderChange={setGenderFilter}
+        race={raceFilter}
+        onRaceChange={setRaceFilter}
+        affiliation={affiliationFilter}
+        onAffiliationChange={setAffiliationFilter}
       />
+
 
       <div className="pagination">
         {Array.from({ length: totalPages }, (_, i) => {
@@ -96,4 +115,6 @@ const CharacterList = () => {
   );
 };
 
+
 export default CharacterList;
+

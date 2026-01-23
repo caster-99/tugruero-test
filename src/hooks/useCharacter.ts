@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { api } from "../api/axios";
 import type { Character } from "../types/character";
 import { formatAxiosError } from "../utils/errorFormatter";
+import toast from "react-hot-toast";
 
 export const useCharacter = (id?: string) => {
   const [character, setCharacter] = useState<Character | null>(null);
@@ -16,8 +17,11 @@ export const useCharacter = (id?: string) => {
         setLoading(true);
         const { data } = await api.get(`/characters/${id}`);
         setCharacter(data);
-      } catch {
-        setError("Error cargando personaje");
+        setError(null);
+      } catch (err) {
+        const message = formatAxiosError(err);
+        setError(message);
+        toast.error("Error cargando personaje: " + message);
       } finally {
         setLoading(false);
       }
@@ -25,24 +29,19 @@ export const useCharacter = (id?: string) => {
 
     fetchCharacter();
   }, [id]);
+
   const createCharacter = async (data: Omit<Character, "id">) => {
     try {
       setLoading(true);
-      await api.post("/characters", data);
+      await api.post("/characters", data); 
 
-      const fakeCharacter: Character = {
-        ...data,
-        id: Math.floor(Math.random() * 1_000_000),
-      };
-
-      setCharacter(fakeCharacter);
-      setError(null);
-      return fakeCharacter;
+      toast.success("Personaje creado con éxito");
+      return true;
     } catch (err) {
       const message = formatAxiosError(err);
-      console.log(err, message);
-      alert("Error creando personaje: " + message);
       setError(message);
+      toast.error("Error API: " + message);
+      return false;
     } finally {
       setLoading(false);
     }
@@ -53,18 +52,19 @@ export const useCharacter = (id?: string) => {
       setLoading(true);
       await api.put(`/characters/${id}`, updates);
 
-      setCharacter((prev) =>
-        prev && prev.id === id ? { ...prev, ...updates } : prev,
-      );
-      setError(null);
+      toast.success("Personaje actualizado con éxito");
+      return true;
     } catch (err) {
       const message = formatAxiosError(err);
       setError(message);
-      alert("Error actualizando personaje: " + message);
+      toast.error("Error API: " + message);
+      return false;
     } finally {
       setLoading(false);
     }
   };
 
+
   return { character, loading, error, createCharacter, updateCharacter };
 };
+

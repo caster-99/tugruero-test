@@ -2,7 +2,8 @@ import type { Character } from "../../types/character";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import "./Characters.scss";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense } from "react";
+
 import Spinner from "../Spinner/Spinner";
 import { IoEyeOutline } from "react-icons/io5";
 import { MdOutlineDeleteOutline, MdOutlineEdit } from "react-icons/md";
@@ -11,6 +12,7 @@ import { DataTable } from "../Table/Table";
 
 interface Props {
   data: Character[];
+  fetchAllUnfiltered: () => Promise<Character[]>;
   page: number;
   pageSize: number;
   sortOrder: "asc" | "desc";
@@ -18,26 +20,42 @@ interface Props {
   onSort: (key: SortKey) => void;
   search: string;
   onSetSearch?: (search: string) => void;
+  gender: string;
+  onGenderChange: (value: string) => void;
+  race: string;
+  onRaceChange: (value: string) => void;
+  affiliation: string;
+  onAffiliationChange: (value: string) => void;
 }
 
 export const CharactersTable = ({
   data,
+  fetchAllUnfiltered,
   page,
   pageSize,
   onDelete,
   onSort,
+  sortOrder,
   search,
+
   onSetSearch,
+  gender,
+  onGenderChange,
+  race,
+  onRaceChange,
+  affiliation,
+  onAffiliationChange,
 }: Props) => {
+
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [sortKey, setSortKey] = useState<SortKey>("name");
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
   const start = (page - 1) * pageSize;
   const pageData = data.slice(start, start + pageSize);
 
+
   const columns: Column<Character>[] = [
+    // ... same columns as before
     {
       key: "actions",
       label: "Acciones",
@@ -122,15 +140,25 @@ export const CharactersTable = ({
   return (
     <div className="characters-table-wrapper">
       <DataTable
-        data={pageData}
-        allData={data}
+        data={data}
+        pageData={pageData}
+        fetchAllUnfiltered={fetchAllUnfiltered}
         columns={columns}
         onSort={onSort}
         rowKey={(char) => char.id}
         sortOrder={sortOrder}
         search={search}
+
+
         onSetSearch={onSetSearch}
+        gender={gender}
+        onGenderChange={onGenderChange}
+        race={race}
+        onRaceChange={onRaceChange}
+        affiliation={affiliation}
+        onAffiliationChange={onAffiliationChange}
       />
     </div>
   );
 };
+

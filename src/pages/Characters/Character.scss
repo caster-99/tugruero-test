@@ -159,28 +159,115 @@
   }
 }
 
-.character-form {
-  max-width: 500px;
-  margin: auto;
+.form-container {
+  max-width: 800px;
+  margin: $spacing-xl auto;
+  padding: $spacing-xl;
+  background: $surface;
+  border-radius: $radius-lg;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 
-  input,
-  textarea,
-  select {
-    width: 100%;
-    margin-bottom: 6px;
-    padding: 8px;
-    border: 1px solid $surface-secondary;
-    border-radius: $radius-sm;
-  }
+  .character-form {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
 
-  p {
-    color: $error;
-    font-size: 12px;
-    margin-bottom: 10px;
-    font-style: italic;
-  }
+    h2 {
+      margin-top: 0;
+      color: $primary;
+      border-bottom: 2px solid $surface-secondary;
+      padding-bottom: $spacing-sm;
+    }
 
-  button {
-    width: 100%;
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-xs;
+
+      label {
+        font-weight: 600;
+        color: $text-primary;
+      }
+
+      input, select, textarea {
+        padding: $spacing-sm;
+        border: 1px solid $surface-secondary;
+        border-radius: $radius-sm;
+        font-size: 1rem;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.05);
+        color: $text-primary;
+
+        &:focus {
+          outline: none;
+          border-color: $primary;
+          box-shadow: 0 0 0 2px rgba($primary, 0.1);
+        }
+
+        &::placeholder {
+          color: $text-secondary;
+          opacity: 0.5;
+        }
+      }
+
+      textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+
+      select[multiple] {
+        height: 120px;
+      }
+
+      .error {
+        margin: 0;
+        color: $error;
+        font-size: 0.85rem;
+        font-style: italic;
+      }
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: $spacing-md;
+      margin-top: $spacing-md;
+
+      button {
+        padding: $spacing-sm $spacing-xl;
+        font-size: 1rem;
+        border-radius: $radius-sm;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.2s;
+
+        &.cancel-btn {
+          background: transparent;
+          border: 1px solid $surface-secondary;
+          color: $text-secondary;
+
+          &:hover {
+            background: rgba($surface-secondary, 0.5);
+          }
+        }
+
+        &.submit-btn {
+          background: $primary;
+          border: none;
+          color: white;
+
+          &:hover {
+            background: darken($primary, 10%);
+          }
+
+          &:disabled {
+            background: $surface-secondary;
+            cursor: not-allowed;
+            opacity: 0.7;
+          }
+        }
+      }
+    }
   }
 }
+
