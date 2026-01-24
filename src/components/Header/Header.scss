@@ -20,6 +20,7 @@
     align-items: center;
     gap: $spacing-md;
   }
+
   .menu-btn {
     font-size: 22px;
     background: none;
@@ -31,26 +32,45 @@
       display: none;
     }
   }
+
   .logo {
     font-weight: 700;
     color: $primary;
+    white-space: nowrap;
+
+    @media (max-width: $mobile) {
+      font-size: 0.9rem;
+    }
   }
 
+
+
   .user {
-    margin-right: $spacing-md;
     color: $text-secondary;
+    font-size: 0.85rem;
+
+    @media (max-width: $tablet) {
+      display: none;
+    }
   }
 
   .logout {
     background: transparent;
-    border: 1px solid $primary;
+    border: 1px solid rgba($primary, 0.5);
     color: $primary;
     padding: 6px 12px;
-    border-radius: $radius-sm;
+    border-radius: $radius-md;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
 
     &:hover {
       background-color: $primary;
       color: $text-primary;
     }
+
+    @media (max-width: $mobile) {
+      padding: 4px 8px;
+    }
   }
 }
+

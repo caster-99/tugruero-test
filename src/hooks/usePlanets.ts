@@ -1,52 +1,99 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { api } from "../api/axios";
-import type { Character } from "../types/character";
+import type { Planet } from "../types/planet";
+import { formatAxiosError } from "../utils/errorFormatter";
+import toast from "react-hot-toast";
+
 
 interface ApiResponse {
-  items: Character[];
+  items: Planet[];
   meta: {
     totalPages: number;
   };
 }
 
-export const usePlanets = () => {
-  const [planets, setPlanets] = useState<Character[]>([]);
+export interface PlanetFilters {
+  name?: string;
+  isDestroyed?: string; // "all" | "destroyed" | "intact"
+}
+
+export const usePlanets = (filters?: PlanetFilters) => {
+  const [planets, setPlanets] = useState<Planet[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchPlanets = async () => {
-    try {
-      setLoading(true);
+  const fetchAllPlanets = useCallback(async (customFilters?: PlanetFilters) => {
+    const params = new URLSearchParams();
+    if (customFilters?.name) params.append("name", customFilters.name);
+    
+    if (customFilters?.isDestroyed && customFilters.isDestroyed !== "all") {
+      params.append("isDestroyed", customFilters.isDestroyed === "destroyed" ? "true" : "false");
+    }
 
-      // Primera llamada para saber cuantas paginas hay
-      const firstResponse = await api.get<ApiResponse>("/planets");
-      const totalPages = firstResponse.data.meta.totalPages;
+    const queryString = params.toString();
+    const baseUrl = `/planets${queryString ? `?${queryString}` : ""}`;
 
-      const allPlanets = [...firstResponse.data.items];
+    const firstResponse = await api.get<any>(baseUrl);
+    
+    let allPlanets: Planet[] = [];
+    let totalPages = 1;
 
-      // Llamadas restantes
+    // Estructura defensiva
+    if (firstResponse.data?.items) {
+      allPlanets = [...firstResponse.data.items];
+      totalPages = firstResponse.data.meta?.totalPages || 1;
+    } else if (Array.isArray(firstResponse.data)) {
+      allPlanets = firstResponse.data;
+      totalPages = 1;
+    }
+
+    if (totalPages > 1) {
       const requests = [];
       for (let page = 2; page <= totalPages; page++) {
-        requests.push(api.get<ApiResponse>(`/planets?page=${page}`));
+        const pageUrl = `/planets?page=${page}${queryString ? `&${queryString}` : ""}`;
+        requests.push(api.get<ApiResponse>(pageUrl));
       }
 
       const responses = await Promise.all(requests);
-
       responses.forEach((res) => {
-        allPlanets.push(...res.data.items);
+        if (res.data?.items) {
+          allPlanets.push(...res.data.items);
+        } else if (Array.isArray(res.data)) {
+          allPlanets.push(...(res.data as any));
+        }
       });
+    }
 
-      setPlanets(allPlanets);
+    return allPlanets;
+  }, []);
+
+  const fetchPlanets = useCallback(async () => {
+    try {
+      setLoading(true);
+      const data = await fetchAllPlanets(filters);
+      setPlanets(data);
+      setError(null);
     } catch (err) {
-      setError("Error cargando planetas");
+      const message = formatAxiosError(err);
+      setError(message);
+      toast.error("Error al cargar planetas: " + message);
     } finally {
       setLoading(false);
     }
-  };
+  }, [filters?.name, filters?.isDestroyed, fetchAllPlanets]);
+
 
   useEffect(() => {
     fetchPlanets();
-  }, []);
+  }, [fetchPlanets]);
 
-  return { planets, loading, error };
+  return { 
+    planets, 
+    loading, 
+    error, 
+    refetch: fetchPlanets,
+    fetchAllUnfiltered: () => fetchAllPlanets({}) 
+  };
+
 };
+

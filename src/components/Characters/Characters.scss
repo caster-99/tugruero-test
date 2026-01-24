@@ -1,21 +1,7 @@
 @use "../../styles/variables" as *;
 
-.filters {
-  margin-bottom: $spacing-md;
-
-  input {
-    width: 250px;
-    padding: 8px 12px;
-    border-radius: $radius-sm;
-    border: 1px solid $surface;
-    color: $text-primary;
-  }
-  input::placeholder {
-    color: $text-primary;
-  }
-}
-
 .actions {
+
   display: flex;
   gap: 6px;
   color: $text-primary;

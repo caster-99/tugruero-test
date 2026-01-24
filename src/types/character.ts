@@ -1,6 +1,6 @@
 import type { Planet } from "./planet";
-import type { Column } from "./table";
 import type { Transformation } from "./transformation";
+
 
 export type GenderTypes = "Male" | "Female" | "Other" | "Unknown";
 export interface Character {
@@ -25,5 +25,6 @@ export interface CharacterFormData {
   affiliation: string;
   gender: (GenderTypes | undefined)[];
   description: string;
-  originPlanet: Planet;
+  originPlanet: string;
 }
+

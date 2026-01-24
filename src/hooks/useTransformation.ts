@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Transformation } from "../types/transformation";
 import { api } from "../api/axios";
+import { formatAxiosError } from "../utils/errorFormatter";
 
 export const useTransformations = (characterId?: string, enabled = false) => {
   const [data, setData] = useState<Transformation[]>([]);
@@ -15,12 +16,14 @@ export const useTransformations = (characterId?: string, enabled = false) => {
       const { data } = await api.get(`/transformations/${characterId}`);
       setData(data);
       console.log("Transformations data:", data);
+      setError(null);
     } catch (err) {
-      setError((err as Error).message);
+      setError(formatAxiosError(err));
     } finally {
       setLoading(false);
     }
   };
+
 
   useEffect(() => {
     if (!characterId) return;

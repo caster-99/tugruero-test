@@ -9,9 +9,16 @@ import type { Planet } from "../../types/planet";
 const PAGE_SIZE = 5;
 
 const PlanetList = () => {
-  const { planets, loading, error } = usePlanets();
   const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
+  const [isDestroyedFilter, setIsDestroyedFilter] = useState<string>("all");
+
+  const filters = useMemo(() => ({
+    name: search,
+    isDestroyed: isDestroyedFilter
+  }), [search, isDestroyedFilter]);
+
+  const { planets, loading, error, fetchAllUnfiltered } = usePlanets(filters);
+  
   const [sortKey, setSortKey] = useState<SortKey | null>(null);
   const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
   const [currentPage, setCurrentPage] = useState(1);
@@ -26,20 +33,13 @@ const PlanetList = () => {
   };
 
   const handlePageChange = (page: number) => {
-    setPage(page + 1);
     setCurrentPage(page);
   };
 
-  const filteredPlanets = useMemo(() => {
-    return planets.filter((p) =>
-      p.name.toLowerCase().includes(search.toLowerCase()),
-    );
-  }, [planets, search]);
-
   const sortedPlanets = useMemo(() => {
-    if (!sortKey) return filteredPlanets;
+    if (!sortKey) return planets;
 
-    return [...filteredPlanets].sort((a, b) => {
+    return [...planets].sort((a, b) => {
       const aVal = a[sortKey as keyof typeof a];
       const bVal = b[sortKey as keyof typeof b];
 
@@ -47,13 +47,19 @@ const PlanetList = () => {
       if (aVal === undefined) return sortOrder === "asc" ? 1 : -1;
       if (bVal === undefined) return sortOrder === "asc" ? -1 : 1;
 
+      if (typeof aVal === "string" && typeof bVal === "string") {
+        return sortOrder === "asc" 
+          ? aVal.localeCompare(bVal)
+          : bVal.localeCompare(aVal);
+      }
+
       if (aVal < bVal) return sortOrder === "asc" ? -1 : 1;
       if (aVal > bVal) return sortOrder === "asc" ? 1 : -1;
       return 0;
     });
-  }, [filteredPlanets, sortKey, sortOrder]);
+  }, [planets, sortKey, sortOrder]);
 
-  const totalPages = Math.ceil(filteredPlanets.length / PAGE_SIZE);
+  const totalPages = Math.ceil(planets.length / PAGE_SIZE);
 
   if (loading) return <Spinner />;
   if (error) return <p>{error}</p>;
@@ -65,14 +71,17 @@ const PlanetList = () => {
       {sortedPlanets.length === 0 && <p>No se encontraron planetas.</p>}
       <PlanetsTable
         data={sortedPlanets}
+        fetchAllUnfiltered={fetchAllUnfiltered}
         onSort={handleSort}
         page={currentPage}
         pageSize={PAGE_SIZE}
         sortOrder={sortOrder}
         search={search}
         onSetSearch={setSearch}
-        onDelete={() => {}}
+        isDestroyed={isDestroyedFilter}
+        onIsDestroyedChange={setIsDestroyedFilter}
       />
+
 
       <div className="pagination">
         {Array.from({ length: totalPages }, (_, i) => {
@@ -91,5 +100,6 @@ const PlanetList = () => {
     </div>
   );
 };
+
 
 export default PlanetList;

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { api } from "../api/axios";
 import type { Planet } from "../types/planet";
+import { formatAxiosError } from "../utils/errorFormatter";
 
 export const usePlanet = (id?: string) => {
   const [planet, setPlanet] = useState<Planet | null>(null);
@@ -15,12 +16,14 @@ export const usePlanet = (id?: string) => {
         setLoading(true);
         const { data } = await api.get(`/planets/${id}`);
         setPlanet(data);
-      } catch {
-        setError("Error cargando planeta");
+        setError(null);
+      } catch (err) {
+        setError(formatAxiosError(err));
       } finally {
         setLoading(false);
       }
     };
+
 
     fetchPlanet();
   }, [id]);
