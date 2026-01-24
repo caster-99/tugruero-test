@@ -36,16 +36,29 @@ const CharacterForm = () => {
   });
 
   useEffect(() => {
-    if (isEdit && character) {
+    if (isEdit) {
+      if (character) {
+        reset({
+          name: character.name,
+          ki: parseKi(String(character.ki)),
+          maxKi: parseKi(String(character.maxKi)),
+          race: character.race,
+          gender: [character.gender] as GenderTypes[],
+          description: character.description,
+          originPlanet: character.originPlanet?.name || "",
+          affiliation: character.affiliation,
+        });
+      }
+    } else {
       reset({
-        name: character.name,
-        ki: parseKi(String(character.ki)),
-        maxKi: parseKi(String(character.maxKi)),
-        race: character.race,
-        gender: [character.gender] as GenderTypes[],
-        description: character.description,
-        originPlanet: character.originPlanet?.name || "",
-        affiliation: character.affiliation,
+        name: "",
+        ki: 0,
+        maxKi: 0,
+        race: "",
+        gender: [],
+        description: "",
+        originPlanet: "",
+        affiliation: "",
       });
     }
   }, [character, isEdit, reset]);

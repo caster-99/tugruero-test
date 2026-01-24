@@ -46,16 +46,13 @@ export const CharactersTable = ({
   affiliation,
   onAffiliationChange,
 }: Props) => {
-
   const { user } = useAuth();
   const navigate = useNavigate();
 
   const start = (page - 1) * pageSize;
   const pageData = data.slice(start, start + pageSize);
 
-
   const columns: Column<Character>[] = [
-    // ... same columns as before
     {
       key: "actions",
       label: "Acciones",
@@ -148,8 +145,6 @@ export const CharactersTable = ({
         rowKey={(char) => char.id}
         sortOrder={sortOrder}
         search={search}
-
-
         onSetSearch={onSetSearch}
         gender={gender}
         onGenderChange={onGenderChange}
@@ -161,4 +156,3 @@ export const CharactersTable = ({
     </div>
   );
 };
-

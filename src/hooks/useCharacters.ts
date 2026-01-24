@@ -75,6 +75,7 @@ export const useCharacters = (filters?: CharacterFilters) => {
       setError(null);
     } catch (err) {
       const message = formatAxiosError(err);
+      console.error("Error al cargar personajes:", message);
       setError(message);
       toast.error("Error al cargar personajes: " + message);
     } finally {

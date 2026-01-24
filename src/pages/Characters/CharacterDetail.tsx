@@ -22,8 +22,8 @@ const CharacterDetail = () => {
       <button className="back" onClick={() => navigate(-1)}>
         <IoIosArrowBack /> Volver
       </button>
-
-      <div className="character-header">
+      <div className="character-detail-wrapper">
+              <div className="character-header">
         <img src={character.image} alt={character.name} loading="lazy" />
         <div>
           <h1>{character.name}</h1>
@@ -149,6 +149,8 @@ const CharacterDetail = () => {
           </div>
         )}
       </div>
+      </div>
+
     </div>
   );
 };

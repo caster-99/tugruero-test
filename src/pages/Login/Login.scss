@@ -1,71 +1,254 @@
 @use "../../styles/variables" as *;
 
-.login-form {
-  max-width: 360px;
-  margin: 80px auto;
-  padding: 24px;
-  border-radius: 8px;
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: $background;
-  color: $text-primary;
+  padding: $spacing-md;
+  overflow: hidden;
+  position: relative;
 
-  h2 {
-    margin-bottom: $spacing-lg;
-    text-align: center;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('../../assets/login-bg.png') no-repeat center center;
+    background-size: cover;
+    opacity: 0.15;
+    filter: blur(100px);
+    z-index: 0;
+  }
+}
+
+.login-container {
+  width: 100%;
+  max-width: 1000px;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  background: rgba($surface, 0.8);
+  backdrop-filter: blur(20px);
+  border-radius: $radius-lg * 2;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  @media (max-width: $tablet) {
+    grid-template-columns: 1fr;
+    max-width: 450px;
+  }
+}
+
+.login-info-section {
+  padding: $spacing-xl * 2;
+  background: linear-gradient(135deg, $primary, darken($primary, 15%));
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+    top: -50%;
+    left: -50%;
   }
 
-  .error {
-    color: $error;
-    margin-bottom: $spacing-md;
-    text-align: center;
-    font-size: 14px;
+  .info-content {
+    position: relative;
+    z-index: 1;
+
+    h1 {
+      font-size: 3.5rem;
+      margin-bottom: 0.5rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      margin-bottom: $spacing-xl * 1.5;
+      font-weight: 500;
+    }
+
+    .features {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-lg;
+
+      .feature-item {
+        display: flex;
+        align-items: center;
+        gap: $spacing-md;
+
+        svg {
+          font-size: 1.5rem;
+          flex-shrink: 0;
+        }
+
+        p {
+          font-size: 1.1rem;
+          line-height: 1.4;
+          opacity: 0.95;
+        }
+      }
+    }
   }
 
-  .field {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: $spacing-md;
+  @media (max-width: $tablet) {
+    display: none;
+  }
+}
 
-    input {
-      padding: 10px;
-      border-radius: $radius-sm;
-      border: 1px solid $primary;
-      background: $background;
-      color: $text-primary;
+.login-form-section {
+  padding: $spacing-xl * 1.5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: $surface;
 
-      &:focus {
-        outline: none;
-        border-color: $primary;
+  .login-form {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+
+    .form-header {
+      margin-bottom: $spacing-xl;
+      
+      h2 {
+        font-size: 2rem;
+        color: $text-primary;
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        color: $text-secondary;
       }
     }
 
-    span {
-      margin-top: $spacing-xs;
-      font-size: 12px;
+    .error-banner {
+      background: rgba($error, 0.1);
       color: $error;
-    }
-  }
-
-  .info {
-    margin: $spacing-sm 0 $spacing-xs 0;
-  }
-
-  button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: $radius-sm;
-    background: $primary;
-    color: $text-secondary;
-    cursor: pointer;
-    font-weight: 500;
-
-    &:hover {
-      opacity: 0.9;
+      padding: $spacing-sm $spacing-md;
+      border-radius: $radius-sm;
+      margin-bottom: $spacing-lg;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border-left: 4px solid $error;
     }
 
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
+    .field {
+      margin-bottom: $spacing-lg;
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-xs;
+
+      label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: $text-primary;
+      }
+
+      .input-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        .input-icon {
+          position: absolute;
+          left: $spacing-md;
+          color: $text-secondary;
+          font-size: 1.2rem;
+        }
+
+        input {
+          width: 100%;
+          padding: 12px 12px 12px 45px;
+          border: 2px solid $surface-secondary;
+          border-radius: $radius-md;
+          background: $background;
+          font-size: 1rem;
+          transition: all 0.2s;
+
+          &:focus {
+            outline: none;
+            border-color: $primary;
+            background: $surface;
+            box-shadow: 0 0 0 4px rgba($primary, 0.1);
+          }
+        }
+      }
+
+      .error-text {
+        font-size: 0.8rem;
+        color: $error;
+        margin-top: 4px;
+      }
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      background: $primary;
+      color: white;
+      border: none;
+      border-radius: $radius-md;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: $spacing-sm;
+
+      &:hover {
+        background: darken($primary, 5%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba($primary, 0.3);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+
+    .credentials-info {
+      margin-top: $spacing-xl;
+      padding: $spacing-md;
+      background: $background;
+      border-radius: $radius-md;
+      border: 1px dashed $surface-secondary;
+
+      .info-title {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: $text-secondary;
+        margin-bottom: $spacing-sm;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .credential-box {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        code {
+          font-family: 'Courier New', Courier, monospace;
+          font-size: 0.85rem;
+          color: $text-primary;
+        }
+      }
     }
   }
 }

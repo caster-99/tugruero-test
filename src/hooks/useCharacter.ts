@@ -10,7 +10,11 @@ export const useCharacter = (id?: string) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!id) return;
+    if (!id) {
+      setCharacter(null);
+      setError(null);
+      return;
+    }
 
     const fetchCharacter = async () => {
       try {

@@ -55,7 +55,7 @@ export const CharactersFilters = ({
   ];
 
   return (
-    <div className="filters" style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+    <div className="filters">
       <input
         placeholder="Nombre"
         value={search}
