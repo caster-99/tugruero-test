@@ -2,16 +2,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import Spinner from "../../components/Spinner/Spinner";
 import "./Planets.scss";
 import { IoIosArrowBack } from "react-icons/io";
-import { useEffect, useState } from "react";
 import { usePlanet } from "../../hooks/usePlanet";
-
-type TabKey = "info" | "personajes";
 
 const PlanetDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { planet, loading, error } = usePlanet(id);
-  const [activeTab, setActiveTab] = useState<TabKey>("info");
 
   if (loading) return <Spinner />;
   if (error) return <p>{error}</p>;

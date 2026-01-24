@@ -4,7 +4,6 @@ import Spinner from "../../components/Spinner/Spinner";
 import type { SortKey, SortOrder } from "../../types/table";
 import { usePlanets } from "../../hooks/usePlanets";
 import { PlanetsTable } from "../../components/Planets/PlanetsTable";
-import type { Planet } from "../../types/planet";
 
 const PAGE_SIZE = 5;
 
@@ -12,13 +11,16 @@ const PlanetList = () => {
   const [search, setSearch] = useState("");
   const [isDestroyedFilter, setIsDestroyedFilter] = useState<string>("all");
 
-  const filters = useMemo(() => ({
-    name: search,
-    isDestroyed: isDestroyedFilter
-  }), [search, isDestroyedFilter]);
+  const filters = useMemo(
+    () => ({
+      name: search,
+      isDestroyed: isDestroyedFilter,
+    }),
+    [search, isDestroyedFilter],
+  );
 
   const { planets, loading, error, fetchAllUnfiltered } = usePlanets(filters);
-  
+
   const [sortKey, setSortKey] = useState<SortKey | null>(null);
   const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
   const [currentPage, setCurrentPage] = useState(1);
@@ -48,7 +50,7 @@ const PlanetList = () => {
       if (bVal === undefined) return sortOrder === "asc" ? -1 : 1;
 
       if (typeof aVal === "string" && typeof bVal === "string") {
-        return sortOrder === "asc" 
+        return sortOrder === "asc"
           ? aVal.localeCompare(bVal)
           : bVal.localeCompare(aVal);
       }
@@ -82,7 +84,6 @@ const PlanetList = () => {
         onIsDestroyedChange={setIsDestroyedFilter}
       />
 
-
       <div className="pagination">
         {Array.from({ length: totalPages }, (_, i) => {
           const page = i + 1;
@@ -100,6 +101,5 @@ const PlanetList = () => {
     </div>
   );
 };
-
 
 export default PlanetList;
