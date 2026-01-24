@@ -13,7 +13,7 @@ const Header = ({ onMenuClick }: { onMenuClick: () => void }) => {
         </button>
         <span className="logo">
           DragonBall
-          {user?.role === "admin" ? " Admin" : "Wiki"}
+          {user?.role === "admin" ? " Admin" : " Wiki"}
         </span>
       </div>
 
