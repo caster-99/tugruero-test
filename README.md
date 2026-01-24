@@ -1,73 +1,69 @@
-# React + TypeScript + Vite
+# Tugruero Test
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este es un proyecto de aplicación web desarrollado con **React**, **TypeScript** y **Vite**. La aplicación incluye gestión de autenticación, manejo de personajes ("Characters") y un sistema de rutas protegidas.
 
-Currently, two official plugins are available:
+## 🚀 Tecnologías Utilizadas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+El proyecto utiliza un conjunto moderno de herramientas y librerías:
 
-## React Compiler
+- **Core**: [React](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
+- **Build Tool**: [Vite](https://vitejs.dev/)
+- **Enrutamiento**: [React Router DOM](https://reactrouter.com/)
+- **Estilos**: [Sass](https://sass-lang.com/) (SCSS)
+- **Formularios y Validación**: [React Hook Form](https://react-hook-form.com/) + [Yup](https://github.com/jquense/yup)
+- **Cliente HTTP**: [Axios](https://axios-http.com/)
+- **Notificaciones**: [React Hot Toast](https://react-hot-toast.com/)
+- **Iconos**: [React Icons](https://react-icons.github.io/react-icons/)
+- **Manejo de CSV**: [PapaParse](https://www.papaparse.com/)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Instalación y Configuración
 
-## Expanding the ESLint configuration
+Sigue estos pasos para configurar el proyecto en tu máquina local:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1.  **Clonar el repositorio** (si aplica) o descargar los archivos.
+2.  **Instalar dependencias**:
+    Abre una terminal en la raíz del proyecto y ejecuta:
+    ```bash
+    npm install
+    ```
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## ▶️ Ejecución
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Para iniciar el servidor de desarrollo:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+La aplicación estará disponible generalmente en `http://localhost:5173`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 📦 Construcción para Producción
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Para generar los archivos optimizados para producción:
+
+```bash
+npm run build
 ```
+
+Esto creará una carpeta `dist` con los archivos listos para desplegar.
+
+## 📂 Estructura del Proyecto
+
+La estructura principal del código fuente (`src`) está organizada de la siguiente manera:
+
+-   **`components/`**: Componentes reutilizables (ej. Tablas, Botones).
+-   **`pages/`**: Vistas principales de la aplicación (ej. Login, Characters).
+-   **`api/`**: Lógica de conexión con APIs y servicios externos.
+-   **`styles/`**: Estilos globales y variables SCSS.
+
+---
+
+Desarrollado como parte del proyecto **Tugruero Test**.
+
+
+**.env info:**
+VITE_API_URL=https://dragonball-api.com/api
+VITE_ADMIN_EMAIL=admin@test.com
+VITE_ADMIN_PASSWORD=Admin123
+VITE_USER_EMAIL=user@test.com
+VITE_USER_PASSWORD=User123
