@@ -11,7 +11,10 @@ const Header = ({ onMenuClick }: { onMenuClick: () => void }) => {
         <button className="menu-btn" onClick={onMenuClick}>
           <IoMenu />
         </button>
-        <span className="logo">DragonBall Admin</span>
+        <span className="logo">
+          DragonBall
+          {user?.role === "admin" ? " Admin" : "Wiki"}
+        </span>
       </div>
 
       <div className="header__right">
